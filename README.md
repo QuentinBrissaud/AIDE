@@ -2,7 +2,13 @@
 
 ## Summary
 AIDE allows you to scan vTEC records to detect co-seismic ionospheric perturbations. AIDE software consists of a Machine-Learning based detector, arrival-time picker, and an associator across GNSS satellite networks. 
+
 <img width="421" alt="image" src="https://user-images.githubusercontent.com/6717390/230471273-a553ba77-6860-4752-8100-3eb6956b4a40.png">
+Figure: (from Brissaud and Astafyeva, 2022) (d) hand-picked arrival times for satellites G05 and G26 along with the epicentre location
+(yellow star), and surface projection of the fault slip (in m) as green to yellow patches, (e) RF-based arrival-time predictions for each confirmed detection
+for satellites G05, G26 and G27 with an inset plot showing a newly detected CID arrival (red vertical line) for satellite G27 and station 0167 which was not
+reported by human analyst and (f) association classes determined from confirmed detections, along with an inset plot showing the vTEC data for satellite G26,
+station 0155.
 
 ## Requirements
 - Python3.7
