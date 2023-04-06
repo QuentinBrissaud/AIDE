@@ -12,7 +12,7 @@ AIDE allows you to scan vTEC records to detect co-seismic ionospheric perturbati
 - seaborn
 
 ## Usage
-See Python notebook "AIDE_nb.py"
+See Python notebook "AIDE_nb.ipynb"
 
 ## Data
 You can collect the vTEC data and random forest models here: https://doi.org/10.6084/m9.figshare.19661115
