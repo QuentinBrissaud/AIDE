@@ -1,28 +1,12 @@
 #!/usr/bin/env python3
 import numpy as np
 from pdb import set_trace as bp
-import matplotlib.pyplot as plt
 import pandas as pd
-import os
-import obspy
-import ast
-import pickle
-import itertools
-import seaborn as sns
-from matplotlib.collections import QuadMesh
-from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-import string
 import time as tm
-import copy
 
-from scipy import signal
-from obspy.core.utcdatetime import UTCDateTime
-from obspy.signal.tf_misfit import cwt, plot_tfr, plot_tf_gofs
-from sklearn.metrics import roc_curve
-from obspy.signal.trigger import classic_sta_lta
 from obspy.geodetics.base import degrees2kilometers
 
-import compute_params_waveform, read_data, train_est, train_wave_picker, localization, utils_paper
+import utils_paper
 
 def add_lat_lon_to_detections(tec_data, detections, window, tec_data_hion=pd.DataFrame(), hion_dict={}, take_true_location=False):
     

@@ -2,28 +2,14 @@
 import numpy as np
 from pdb import set_trace as bp
 import pandas as pd
-import os
-import obspy
-import pickle
 import joblib
-import time
-            
-import matplotlib.pyplot as plt
-import seaborn as sb
-from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-import matplotlib.dates as mdates
-import matplotlib.colors as mcolors
 import seaborn as sns
-from matplotlib.colors import ListedColormap
 
 from obspy.core.utcdatetime import UTCDateTime
 
 from sklearn.neural_network import MLPRegressor
-from sklearn.preprocessing import StandardScaler, QuantileTransformer
-from sklearn.pipeline import make_pipeline
 from sklearn.ensemble import ExtraTreesRegressor
 import joblib
-from sklearn.model_selection import GridSearchCV
 from obspy.signal.trigger import classic_sta_lta
 
 import compute_params_waveform, read_data, train_est, utils_paper

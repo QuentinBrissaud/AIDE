@@ -7,10 +7,7 @@ import obspy
 import ast
 import sys
 
-from scipy import signal, interpolate
-from obspy.core.utcdatetime import UTCDateTime
-from obspy.signal.tf_misfit import cwt, plot_tfr, plot_tf_gofs
-from sklearn.metrics import roc_curve
+from scipy import interpolate
 
 import compute_params_waveform
 

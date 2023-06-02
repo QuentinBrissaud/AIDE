@@ -9,7 +9,6 @@ import seaborn as sns
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import matplotlib as mpl
 from obspy.core.utcdatetime import UTCDateTime
-import pygmt
 from matplotlib import animation
 from functools import partial
 from sklearn.datasets import make_blobs
@@ -17,7 +16,6 @@ from mpl_toolkits.axes_grid1.anchored_artists import AnchoredSizeBar
 import matplotlib.gridspec as gridspec
 from matplotlib.colors import ListedColormap
 import os
-import random
 import matplotlib.ticker as ticker
 
 from sklearn import preprocessing

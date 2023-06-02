@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
-import numpy as np
 from pdb import set_trace as bp
-import matplotlib.pyplot as plt
 import pandas as pd
-import os
-import obspy
-import seaborn as sns
-from obspy.core.utcdatetime import UTCDateTime
 
-import detector, compute_params_waveform, read_data, train_est, train_wave_picker, localization, utils_paper, associator, constants
+import detector, read_data, train_est, train_wave_picker, utils_paper, associator, constants
 
 class AIDE():
     
