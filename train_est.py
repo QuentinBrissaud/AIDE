@@ -607,7 +607,7 @@ def process_timeseries_with_forest(time_end, est, tec_data, tec_data_param, even
     time_boundaries      = np.arange(times[0], times[-1]-window, window/options['factor_overlap'])
     iloc_time_boundaries = [np.argmin(abs(time - times)) for time in time_boundaries]
     #size_subset          = np.argmin( abs((times-times[0]) - window) ) + 1
-    size_subset = np.arange(0., window+sampling, sampling).size
+    size_subset = np.arange(0., window+sampling, np.ceil(sampling)).size
     
     ## Compute parameters for each time step
     probas  = pd.DataFrame()
@@ -616,9 +616,11 @@ def process_timeseries_with_forest(time_end, est, tec_data, tec_data_param, even
     
         iend = i0 + size_subset - 1
         #print('----------------------------')
-        #print(station, satellite, times[iend]-times[i0])
+        #print(station, satellite, times[iend]-times[i0], window, (size_subset-1)*sampling, size_subset, sampling)
+        #print(times[i0:iend+1].size, size_subset, abs(times[iend]-times[i0] - window))
+
         if times[i0:iend+1].size < size_subset or abs(times[iend]-times[i0] - window) > 1.: 
-            #print('Removed')
+            print('Removed')
             continue
     
         if determine_elapsed_time:
@@ -711,40 +713,6 @@ def process_timeseries_with_forest(time_end, est, tec_data, tec_data_param, even
         if determine_elapsed_time:
             time_prediction = time.time()
             
-        #if class_predicted == 1:
-        if False:
-            
-            vTEC = np.array([tr.data])
-            vTEC /= abs(vTEC).max()
-            
-            predicted_time = times[i0] + window*0.5 + est_picker.predict(vTEC)[0]
-            
-            """
-            tr_ = obspy.Trace()
-            tr_.data        = waveform['vTEC'].values[i0:iend+1]
-            tr_.stats.delta = abs( times[1] - times[0] )
-            tr_.filter("bandpass", freqmin=options['freq_min'], freqmax=options['freq_max'], zerophase=True)
-            tr_.differentiate()
-            tr_.detrend("polynomial", order=1)
-            
-            plt.plot(tr.times(), tr.data); plt.plot(tr_.times(), tr_.data); plt.show()
-            features = read_data.extract_features_based_on_input_type(tr_, type_data, type, options); data_in = features[columns_in].copy(); proba   = est.predict_proba(data_in.values)
-            """
-            
-            tr_, _, _ = read_data.pre_process_waveform(times, waveform['vTEC'].values, 0, waveform['vTEC'].values.size-1, 100000., detrend=True, bandpass=[options['freq_min'], options['freq_max']],standard_sampling=standard_sampling)
-            tr_.trim(starttime=tr_.stats.starttime + times[i0]-times[0], endtime=tr_.stats.starttime + times[iend]-times[0])
-        
-            fig, axs = plt.subplots(nrows=2, ncols=1, sharex=True)
-            axs[0].plot(waveform['time_s'].values, waveform['vTEC'].values); 
-            axs[0].axvline(waveform['time_s'].values[i0], color='red')
-            axs[0].axvline(waveform['time_s'].values[iend], color='red')
-            axs[0].axvline(predicted_time, color='green')
-            axs[1].plot(waveform['time_s'].values[i0] + tr.times(), tr.data)
-            axs[1].plot(waveform['time_s'].values[i0] + tr_.times(), tr_.data)
-            axs[1].axvline(predicted_time, color='green')
-            plt.show()
-            bp()
-        
         probas = probas.append( [loc_dict] )
         
         if determine_elapsed_time:
@@ -760,20 +728,19 @@ def process_timeseries_with_forest(time_end, est, tec_data, tec_data_param, even
             }
             time_elapsed = time_elapsed.append( [loc_time] )
     
-    #probas = pd.DataFrame(probas)
-    
     ## Determine arrival 
-    #arrival_time_, proba_ = compute_arrival_time(probas, window, nb_for_class=options['nb_for_class'])
     detections = compute_arrival_time(probas, window, nb_for_class=options['nb_for_class'], 
                                       nb_for_end_class=options['nb_for_end_class'])
+    print('Detections done')
     
     ## Plot time series along with detection probabilities
     if plot_probas:
         true_arrival = -1
-        if tec_data_param.size > 0:
-            true_arrival = tec_data_param.epoch
-            #true_arrival = tec_data_param.epoch
         print('Plotting')
+        if tec_data_param.size > 0:
+            true_arrival = tec_data_param['arrival-time']
+            print(f'true_arrival: {true_arrival:.2f}s')
+            #true_arrival = tec_data_param.epoch
         plot_processed_timeseries(event, satellite, station, waveform, 
                                   probas, detections, window, options,
                                   true_arrival=true_arrival, figsize=figsize,

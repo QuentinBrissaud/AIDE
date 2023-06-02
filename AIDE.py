@@ -47,7 +47,7 @@ class AIDE():
         
     def load_data(self, load_dict):
     
-        self.options['load'].update( load_dict )
+        self.options.update( load_dict )
         self.tec_data, self.tec_data_param = read_data.read_data_folders(self.options)
         
     def load_RF_detector(self, load_dict):

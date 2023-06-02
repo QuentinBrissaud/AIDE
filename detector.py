@@ -1341,6 +1341,11 @@ def compute_arrival_times_RF(est, data, tec_data, tec_data_param, detection_para
         available_simulations = data_to_process.groupby(['event', 'satellite', 'station']).first()\
                                     .reset_index()[['event', 'satellite', 'station']].values
         nb_simulations = available_simulations.shape[0]
+
+        if nb_simulations == 0:
+            print('No data requested available')
+            return
+
         compute_arrival_times_one_station_partial = \
             partial(compute_arrival_times_one_station, est, input_columns, tec_data_param, options, 
                     focus_on_arrival, focus_arrival_shift, est_picker, use_STA_LTA_for_picking,
