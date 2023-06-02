@@ -12,7 +12,7 @@ reported by human analyst and (f) association classes determined from confirmed 
 station 0155.
 
 ## Requirements
-- >= Python3.7.9
+- Python3.7.9
 - See requirements.txt
 
 ## Usage
