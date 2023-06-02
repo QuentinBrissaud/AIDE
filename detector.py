@@ -4,29 +4,18 @@ from pdb import set_trace as bp
 import matplotlib.pyplot as plt
 import pandas as pd
 import os
-import obspy
-import ast
 import pickle
 import itertools
 import seaborn as sns
 from matplotlib.collections import QuadMesh
-from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-import matplotlib.gridspec as gridspec
 import string
-import time as tm
 import copy
-
-from scipy import signal
-from obspy.core.utcdatetime import UTCDateTime
-from obspy.signal.tf_misfit import cwt, plot_tfr, plot_tf_gofs
-from sklearn.metrics import roc_curve
 from obspy.signal.trigger import classic_sta_lta
-from obspy.geodetics.base import degrees2kilometers
 
 from multiprocessing import get_context
 from functools import partial
 
-import compute_params_waveform, read_data, train_est, train_wave_picker, localization, utils_paper, associator
+import read_data, train_est
 
 
 def dfinterface_process_timeseries_with_forest(x, time_end, est, tec_data, tec_data_param, 
