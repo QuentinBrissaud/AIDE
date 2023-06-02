@@ -606,8 +606,7 @@ def process_timeseries_with_forest(time_end, est, tec_data, tec_data_param, even
     
     time_boundaries      = np.arange(times[0], times[-1]-window, window/options['factor_overlap'])
     iloc_time_boundaries = [np.argmin(abs(time - times)) for time in time_boundaries]
-    #size_subset          = np.argmin( abs((times-times[0]) - window) ) + 1
-    size_subset = np.arange(0., window+sampling, np.ceil(sampling)).size
+    size_subset = np.arange(0., window+sampling, np.round(sampling)).size
     
     ## Compute parameters for each time step
     probas  = pd.DataFrame()
@@ -626,20 +625,11 @@ def process_timeseries_with_forest(time_end, est, tec_data, tec_data_param, even
         if determine_elapsed_time:
             time_start = time.time()
     
-        #print('Verified')
-        
         ## Extract waveform over the right subset
-        #tr = read_data.create_Trace(times[:iend], waveform['vTEC'].values[:iend], detrend=False)
-        #tr.differentiate()
-        #tr.trim(tr.stats.starttime + tr.times()[i0], tr.stats.starttime + tr.times()[-1])
         tr, i0_, iend_ = read_data.pre_process_waveform(times, waveform['vTEC'].values, 
                                                       i0, iend, window, detrend=True, 
                                                       bandpass=[options['freq_min'], options['freq_max']],
                                                       standard_sampling=standard_sampling)
-        
-        #tr_ = compute_params_waveform.create_Trace(times[:], waveform['vTEC'].values, detrend=False, bandpass=[5e-4, options['freq_max']], differentiate=True); tr = compute_params_waveform.create_Trace(times[:iend+1], waveform['vTEC'].values[:iend+1], detrend=False, bandpass=[5e-4, options['freq_max']], differentiate=True)
-        #tr_, _, _ = read_data.pre_process_waveform(times, waveform['vTEC'].values, i0, iend, window, detrend=False, bandpass=[1e-4, options['freq_max']], standard_sampling=standard_sampling)
-        #plt.plot(times, waveform['vTEC'].values); plt.axvline(times[i0]); plt.axvline(times[iend]); plt.show()
         
         ## Compute time-domain features
         type_data = '' # dummy value not used
@@ -731,7 +721,6 @@ def process_timeseries_with_forest(time_end, est, tec_data, tec_data_param, even
     ## Determine arrival 
     detections = compute_arrival_time(probas, window, nb_for_class=options['nb_for_class'], 
                                       nb_for_end_class=options['nb_for_end_class'])
-    print('Detections done')
     
     ## Plot time series along with detection probabilities
     if plot_probas:
