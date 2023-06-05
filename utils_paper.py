@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import numpy as np
 import matplotlib.pyplot as plt 
-from mpl_toolkits.basemap import Basemap
 import string
 import pandas as pd
 from pdb import set_trace as bp
@@ -24,8 +23,17 @@ from obspy.geodetics.base import gps2dist_azimuth
 from multiprocessing import get_context
 from functools import partial
 
-from adjustText import adjust_text
 import obspy
+
+try:
+    from mpl_toolkits.basemap import Basemap
+except:
+    print('Can not find Basemap. Ignored for now')
+
+try:
+    from adjustText import adjust_text
+except:
+    print('Can not find adjustText. Ignored for now')
 
 import detector, train_est, compute_params_waveform, read_data, train_wave_picker
 
